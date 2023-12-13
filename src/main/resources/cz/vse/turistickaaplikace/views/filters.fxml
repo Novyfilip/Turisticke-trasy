@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<VBox AnchorPane.bottomAnchor="0.0"
+      AnchorPane.leftAnchor="0.0"
+      AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="cz.vse.turistickaaplikace.controllers.FiltersController">
+    <children>
+        <HBox alignment="CENTER">
+            <children>
+                <Label text="Filtry">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Region disable="true" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Region>
+                <Button focusTraversable="false" graphicTextGap="5.0" mnemonicParsing="false" onMouseClicked="#closeFiltersPanel" text="Zpět">
+               <graphic>
+                  <SVGPath content="M6.67188 10.9375L2.73438 7L6.67188 3.0625M3.28125 7H11.2656" fill="TRANSPARENT" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+               </graphic></Button>
+            </children>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </HBox>
+        <Label text="Náročnost">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </Label>
+        <VBox spacing="5.0">
+            <children>
+                <CheckBox fx:id="easyCheckbox" onAction="#handleComplexity" selected="true" mnemonicParsing="false" text="Mírná">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font>
+                </CheckBox>
+                <CheckBox fx:id="mediumCheckbox" onAction="#handleComplexity" selected="true" mnemonicParsing="false" text="Střední">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+               <font>
+                  <Font size="12.0" />
+               </font>
+                </CheckBox>
+                <CheckBox fx:id="hardCheckbox" onAction="#handleComplexity" selected="true" mnemonicParsing="false" text="Těžká">
+               <font>
+                  <Font size="12.0" />
+               </font></CheckBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" />
+            </padding>
+        </VBox>
+        <Label text="Délka">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </Label>
+        <Pane fx:id="distanceSliderPlaceholder" VBox.vgrow="NEVER">
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin></Pane>
+        <HBox>
+            <children>
+                <Label fx:id="distanceMinValue" alignment="CENTER_RIGHT" text="min" textAlignment="RIGHT">
+                    <font>
+                        <Font name="System Bold" size="10.0" />
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="distanceMaxValue" alignment="CENTER_RIGHT" text="max" textAlignment="RIGHT">
+                    <font>
+                        <Font name="System Bold" size="10.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="20.0" />
+            </padding>
+        </HBox>
+      <HBox alignment="CENTER_LEFT">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+         <children>
+              <Label text="Hodnocení">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="reviewValue" alignment="CENTER_RIGHT" text="Jakékoliv" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Slider fx:id="reviewSlider" majorTickUnit="1.0" max="3.0" minorTickCount="0" snapToTicks="true" />
+        <Pane fx:id="reviewSliderPlaceholder" VBox.vgrow="NEVER">
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin></Pane>
+      <HBox>
+         <children>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="0" textAlignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" />
+               </graphic>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="3.5" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="4.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" />
+               </graphic>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="4.5" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" />
+               </graphic>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </HBox>
+    </children>
+</VBox>
