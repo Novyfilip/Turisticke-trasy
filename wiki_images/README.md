@@ -1,0 +1,1 @@
+obsahuje obrázky pro wiki
