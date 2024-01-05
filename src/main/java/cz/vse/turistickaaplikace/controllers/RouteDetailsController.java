@@ -1,23 +1,33 @@
 package cz.vse.turistickaaplikace.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.vse.turistickaaplikace.components.EmptyComponent;
 import cz.vse.turistickaaplikace.components.ReviewComponent;
 import cz.vse.turistickaaplikace.components.RouteComponent;
+import cz.vse.turistickaaplikace.enumerators.AppChange;
+import cz.vse.turistickaaplikace.interfaces.IObserver;
 import cz.vse.turistickaaplikace.models.Review;
 import cz.vse.turistickaaplikace.models.Route;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RouteDetailsController implements Initializable {
 
@@ -36,12 +46,8 @@ public class RouteDetailsController implements Initializable {
     public Label reviewLabel;
 
     public Text descriptionLabel;
-    public TextField komentareText;
-    public Slider sliderHodnoceni;
 
     private AppController appController;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,25 +94,6 @@ public class RouteDetailsController implements Initializable {
         appController.closePanel();
         appController.webEngine.executeScript("clearMap()");
         appController.webEngine.executeScript("recenterMap()");
-
-    }
-
-    public void odesliClick(MouseEvent mouseEvent) {
-        /*TODO logika po stisknuti tlacitka odesli
-        nacteni textu komentare z TextField komentare text - v jsonu comment
-        nacteni hodnoty slideru sliderHodnoceni - v jsonu reviewValue
-        vytvoreni instance tridy Review
-        a ulozeni do jsonu (jak na to?)
-         */
-        komentareText.setDisable(true);
-        Review review = new Review();
-        /*tady to udelat tak, aby to naslo nejvyssi hodnotu a pridalo +1)*/
-        review.setId(3);
-        /*review.setDateTime();*/
-        review.setReviewValue(Integer.valueOf((int) sliderHodnoceni.getValue()));
-        review.setComment(komentareText.getText());
-        komentareText.clear();
-        sliderHodnoceni.setValue(1);
 
     }
 }
