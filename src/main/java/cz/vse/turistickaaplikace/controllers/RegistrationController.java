@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import cz.vse.turistickaaplikace.models.User;
 
@@ -52,10 +53,39 @@ public class RegistrationController implements Initializable, IObservable {
         String username = usernameField.getText();
         String heslo = hesloField.getText();
 
-        User newUser = new User(username, heslo, email, jmeno, prijmeni, false, null);
-        userList.add(newUser);
-        showAlertDialog(Alert.AlertType.INFORMATION, "Registration Successful", "User " + username + " has been registered.");
+        // Call the registration method with validation
+        if (registerUser(username, email, heslo, jmeno, prijmeni)) {
+            showAlertDialog(Alert.AlertType.INFORMATION, "Registrace Dokončena", "Váš účet byl úspěšně vytvořen. Nyní se můžete přihlásit.");
+        } else {
+            // Show error message if validation fails
+            showAlertDialog(Alert.AlertType.ERROR, "Registrace selhala", "Vaše údaje nesplňují požadavky. Vyplňte povinné údaje s heslem dlouhým alespoň 8 znaků.");
+        }
     }
+    private boolean isUsernameUnique(String username) {
+        return appController.getUserList().stream().noneMatch(user -> user.getUsername().equals(username));
+    }
+
+    private boolean isEmailValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() >= 8;
+    }
+    private boolean registerUser(String username, String email, String password, String jmeno, String prijmeni) {
+        if (isUsernameUnique(username) && isEmailValid(email) && isPasswordValid(password)) {
+            User newUser = new User(username, password, email, jmeno, prijmeni, false, null);
+            appController.getUserList().add(newUser);
+            appController.saveUsers(); // Save the new user list to JSON
+            return true;
+        }
+        return false;
+    }
+
+// isUsernameUnique, isEmailValid, isPasswordValid methods as before
+
     @FXML
     private void handleCloseAction(ActionEvent event) {
         appController.restoreOriginalContentView();

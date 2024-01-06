@@ -20,6 +20,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import java.io.File;
+
 
 public class AppController implements Initializable {
 
@@ -50,13 +54,35 @@ public class AppController implements Initializable {
         this.isLoggedIn = loggedIn;
     }
     private List<User> userList = new ArrayList<>();
+    private final String userFilePath = "src/main/resources/cz/vse/turistickaaplikace/users.json";
 
     public List<User> getUserList() {
         return userList;
     }
 
-    public void loadUsers() {
-        // Mělo by načítat z databáze, dodělat
+    private void loadUsers() {
+        ObjectMapper mapper = new ObjectMapper();
+        File file = new File(userFilePath);
+        if (file.exists()) {
+            try {
+                CollectionType javaType = mapper.getTypeFactory()
+                        .constructCollectionType(List.class, User.class);
+                userList = mapper.readValue(file, javaType);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle exceptions
+            }
+        }
+    }
+
+    void saveUsers() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File(userFilePath), userList);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 
 
@@ -104,8 +130,8 @@ public class AppController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent view = loader.load();
-            container.getChildren().clear(); // Clear current view
-            container.getChildren().add(view); // Add new view
+            container.getChildren().clear();
+            container.getChildren().add(view);
 
             Object controller = loader.getController();
             if (controller instanceof LoginController) {
@@ -116,10 +142,10 @@ public class AppController implements Initializable {
                 ((RegistrationController) controller).setAppController(this);
             }
 
-            // Add similar conditions for other controllers if necessary
+
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle exceptions
+
         }
     }
 
