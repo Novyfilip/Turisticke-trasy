@@ -12,11 +12,14 @@ import javafx.scene.control.Alert;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import cz.vse.turistickaaplikace.models.User;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class LoginController implements Initializable, IObservable {
@@ -33,11 +36,12 @@ public class LoginController implements Initializable, IObservable {
     private PasswordField passwordField;
 
     // Assuming you have a way to access userList from AppController
-    private List<User> userList;
+    private Map<String, User> userMap;
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    } //pro metodu authenticate
+    public void setUserMap(Map<String, User> userMap) {
+        this.userMap = userMap;
+    }
+    //pro metodu authenticate
 
 
     @FXML
@@ -47,6 +51,7 @@ public class LoginController implements Initializable, IObservable {
 
         if (authenticate(username, password)) {
             // Successful login
+            appController.setLoggedInUser(username);
             showSuccessAndRestoreOriginalView("Úspěšné přihlášení", "Vítejte, " + username + "!");
         } else {
             // Failed login
@@ -77,13 +82,36 @@ public class LoginController implements Initializable, IObservable {
 
 
     private boolean authenticate(String username, String password) {
-        for (User user : userList) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return true;
-            }
+        String hashedPassword = hashWithSHA(password);
+        System.out.println("Hešované heslo: " + hashedPassword); // debugging
+
+        User user = userMap.get(username);
+        if (user != null && user.getPassword().equals(hashedPassword)) {
+            System.out.println("Očekáváno: " + user.getPassword()); // debugging
+            return true;
         }
         return false;
     }
+
+
+    public String hashWithSHA(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hashedBytes = md.digest(input.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(hashedBytes);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null; // možná předělám
+        }
+    }
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
 
     private void showAlertDialog(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);

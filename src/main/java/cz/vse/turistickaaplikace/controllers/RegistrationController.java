@@ -11,11 +11,14 @@ import javafx.scene.control.Alert;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
 import cz.vse.turistickaaplikace.models.User;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class RegistrationController implements Initializable, IObservable {
     private AppController appController;
@@ -39,11 +42,12 @@ public class RegistrationController implements Initializable, IObservable {
     @FXML
     private PasswordField hesloField;
 
-    private List<User> userList;
+    private Map<String, User> userMap;
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserMap(Map<String, User> userMap) {
+        this.userMap = userMap;
     }
+
 
     @FXML
     private void handleRegistrationAction(ActionEvent event) {
@@ -53,7 +57,7 @@ public class RegistrationController implements Initializable, IObservable {
         String username = usernameField.getText();
         String heslo = hesloField.getText();
 
-        // Call the registration method with validation
+        // Registrační metoda s validací
         if (registerUser(username, email, heslo, jmeno, prijmeni)) {
             showAlertDialog(Alert.AlertType.INFORMATION, "Registrace Dokončena", "Váš účet byl úspěšně vytvořen. Nyní se můžete přihlásit.");
         } else {
@@ -62,8 +66,9 @@ public class RegistrationController implements Initializable, IObservable {
         }
     }
     private boolean isUsernameUnique(String username) {
-        return appController.getUserList().stream().noneMatch(user -> user.getUsername().equals(username));
+        return !appController.getUserMap().containsKey(username);
     }
+
 
     private boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -76,15 +81,23 @@ public class RegistrationController implements Initializable, IObservable {
     }
     private boolean registerUser(String username, String email, String password, String jmeno, String prijmeni) {
         if (isUsernameUnique(username) && isEmailValid(email) && isPasswordValid(password)) {
-            User newUser = new User(username, password, email, jmeno, prijmeni, false, null);
-            appController.getUserList().add(newUser);
-            appController.saveUsers(); // Save the new user list to JSON
+            String hashedPassword = hashWithSHA(password);
+            String hashedEmail = hashWithSHA(email);
+            // Hashujeme osobní udaje
+            String hashedJmeno = hashWithSHA(jmeno);
+            String hashedPrijmeni = hashWithSHA(prijmeni);
+
+            User newUser = new User(username, hashedPassword, hashedEmail, hashedJmeno, hashedPrijmeni, false, null);
+            appController.getUserMap().put(username, newUser); // Přidá se do dictionary
+            appController.saveUsers(); // Poté se uloží do souboru
             return true;
         }
         return false;
     }
 
-// isUsernameUnique, isEmailValid, isPasswordValid methods as before
+
+
+
 
     @FXML
     private void handleCloseAction(ActionEvent event) {
@@ -108,5 +121,23 @@ public class RegistrationController implements Initializable, IObservable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+    public String hashWithSHA(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hashedBytes = md.digest(input.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(hashedBytes);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null; // možná předělám
+        }
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 }

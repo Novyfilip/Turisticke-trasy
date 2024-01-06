@@ -1,5 +1,7 @@
 package cz.vse.turistickaaplikace.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import cz.vse.turistickaaplikace.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -18,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,11 +60,11 @@ public class AppController implements Initializable {
     public void setLoggedIn(boolean loggedIn) {
         this.isLoggedIn = loggedIn;
     }
-    private List<User> userList = new ArrayList<>();
+    private HashMap<String, User> userMap = new HashMap<>();
     private final String userFilePath = "src/main/resources/cz/vse/turistickaaplikace/users.json";
 
-    public List<User> getUserList() {
-        return userList;
+    public HashMap<String, User> getUserMap() {
+        return userMap;
     }
 
     private void loadUsers() {
@@ -65,9 +72,9 @@ public class AppController implements Initializable {
         File file = new File(userFilePath);
         if (file.exists()) {
             try {
-                CollectionType javaType = mapper.getTypeFactory()
-                        .constructCollectionType(List.class, User.class);
-                userList = mapper.readValue(file, javaType);
+                TypeReference<HashMap<String, User>> typeRef = new TypeReference<HashMap<String, User>>() {};
+                userMap = mapper.readValue(file, typeRef);
+                System.out.println("Načtení uživatelé: " + userMap); // Debugging
             } catch (IOException e) {
                 e.printStackTrace();
                 // Handle exceptions
@@ -75,29 +82,33 @@ public class AppController implements Initializable {
         }
     }
 
+
     void saveUsers() {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
+
         try {
-            mapper.writeValue(new File(userFilePath), userList);
+            mapper.writeValue(new File(userFilePath), userMap);
         } catch (IOException e) {
             e.printStackTrace();
-
+            // Handle exceptions
         }
     }
 
 
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Načtení uživatelů
+        loadUsers();
         // Load map
-        webEngine = Map.getEngine();
-        webEngine.load(getClass().getResource("/cz/vse/turistickaaplikace/leaflet-maps.html").toExternalForm());
+        resetView();
 
-        routesController.setAppController(this);
-        filtersController.setAppController(this);
-        routeDetailsController.setAppController(this);
     }
+
 
     public void openFiltersPanel() {
         filters.setVisible(true);
@@ -136,7 +147,7 @@ public class AppController implements Initializable {
             Object controller = loader.getController();
             if (controller instanceof LoginController) {
                 ((LoginController) controller).setAppController(this);
-                ((LoginController) controller).setUserList(getUserList());
+                ((LoginController) controller).setUserMap(getUserMap());
 
         } else if (controller instanceof RegistrationController) {
                 ((RegistrationController) controller).setAppController(this);
@@ -153,7 +164,8 @@ public class AppController implements Initializable {
 
     public void handleLogout(ActionEvent actionEvent) {
         isLoggedIn = false;
-        loadView("/cz/vse/turistickaaplikace/views/routes.fxml", routes);
+        resetView();
+        loggedInUserLabel.setText("Odhlášeno");
     }
 
 
@@ -173,6 +185,46 @@ public class AppController implements Initializable {
             routes.getChildren().setAll(originalContentView);
         }
     }
+    //Přihlášený uživatel
+    @FXML
+    private Label loggedInUserLabel;
+    @FXML
+    private MenuItem homeMenuItem;
+    @FXML
+    private Button registerButton;
+
+    public void setLoggedInUser(String username) {
+        if (username != null && !username.isEmpty()) {
+            loggedInUserLabel.setText(username);
+            registerButton.setVisible(false); // Hide Register button
+        } else {
+            loggedInUserLabel.setText("Nepřihlášeno");
+            registerButton.setVisible(true); // Show Register button
+        }
+    }
+
+
+
+    @FXML
+    private void handleHomeAction(ActionEvent event) {
+        resetView();
+    }
+    public void resetView() {
+        // Load map and set controllers
+        webEngine = Map.getEngine();
+        webEngine.load(getClass().getResource("/cz/vse/turistickaaplikace/leaflet-maps.html").toExternalForm());
+
+        routesController.setAppController(this);
+        filtersController.setAppController(this);
+        routeDetailsController.setAppController(this);
+
+        // Additional steps to reset the view, if any
+    }
+
+
+
+
+
 
 }
 

@@ -28,6 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
+<?import javafx.scene.control.ToolBar?>
 <VBox maxHeight="1.7976931348623157E308"
       maxWidth="1.7976931348623157E308"
       prefHeight="600.0"
@@ -35,37 +36,37 @@
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="cz.vse.turistickaaplikace.controllers.AppController">
-  <children>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-         <children>
-             <!-- Menu Bar -->
-             <MenuBar>
-                 <menus>
-                     <Menu text="Uživatel">
-                         <items>
-                             <MenuItem fx:id="menuLogin" text="Přihlásit se" onAction="#handleLogin"/>
-                             <MenuItem fx:id="menuLogout" text="Odhlásit se" onAction="#handleLogout"/>
-                             <MenuItem fx:id="menuRegister" text="Registrovat" onAction="#handleRegister"/>
-                         </items>
-                     </Menu>
-                 </menus>
-             </MenuBar>
-            <VBox maxHeight="1.7976931348623157E308">
-               <children>
-                  <AnchorPane VBox.vgrow="ALWAYS">
-                     <children>
-                         <fx:include fx:id="routes" source="routes.fxml" />
-                         <fx:include fx:id="filters" visible="false" source="filters.fxml" />
-                         <fx:include fx:id="routeDetails" visible="false" source="routeDetails.fxml" />
-                     </children>
-                  </AnchorPane>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </VBox>
-            <WebView fx:id="Map" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-  </children>
+    <children>
+        <ToolBar>
+            <Button text="Domů" fx:id="homeButton" onAction="#handleHomeAction" />
+            <Button text="Přihlásit" fx:id="loginButton" onAction="#handleLogin"/>
+            <Button text="Odhlásit" fx:id="logoutButton" onAction="#handleLogout"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox alignment="CENTER_RIGHT">
+                <Button text="Zaregistrovat" fx:id="registerButton" onAction="#handleRegister"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="loggedInUserLabel" text="Nepřihlášeno" />
+            </HBox>
+        </ToolBar>
+        <!-- Rest of your UI elements... -->
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox maxHeight="1.7976931348623157E308">
+                    <children>
+                        <AnchorPane VBox.vgrow="ALWAYS">
+                            <children>
+                                <fx:include fx:id="routes" source="routes.fxml" />
+                                <fx:include fx:id="filters" visible="false" source="filters.fxml" />
+                                <fx:include fx:id="routeDetails" visible="false" source="routeDetails.fxml" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+                <WebView fx:id="Map" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+    </children>
 </VBox>
