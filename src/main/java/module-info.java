@@ -13,4 +13,5 @@ module cz.vse.turistickaaplikace {
     exports cz.vse.turistickaaplikace.enumerators;
     exports cz.vse.turistickaaplikace.interfaces;
     opens cz.vse.turistickaaplikace.controllers to javafx.fxml;
+    opens cz.vse.turistickaaplikace.models to com.fasterxml.jackson.databind;
 }
