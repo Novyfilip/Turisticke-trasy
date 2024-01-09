@@ -14,6 +14,8 @@ public class Review {
 
     private String comment;
 
+    private String author;
+
     public Review() {}
 
     public int getId() {
@@ -27,6 +29,10 @@ public class Review {
 
     public int getReviewValue() {
         return value;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public String getComment() {
@@ -49,5 +55,9 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
