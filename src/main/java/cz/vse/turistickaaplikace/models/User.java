@@ -16,15 +16,12 @@ public class User {
         // Bez argumentů pro Jackson
     }
     public User(String username, String hashedHeslo, String hashedEmail,
-                String hashedJmeno, String hashedPrijmeni, Boolean banned, String bannedUntil) {
+                String hashedJmeno, String hashedPrijmeni) {
         this.username = username;
-        //přidáno zabezpečení
         this.password = hashedHeslo;
         this.email = hashedEmail;
         this.jmeno = hashedJmeno;
         this.prijmeni = hashedPrijmeni;
-        this.banned = Boolean.FALSE;
-        this.bannedUntil = bannedUntil;
     }
 
     public String getUsername() {
