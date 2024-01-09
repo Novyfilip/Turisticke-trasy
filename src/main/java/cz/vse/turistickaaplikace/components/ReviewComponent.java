@@ -55,6 +55,7 @@ public class ReviewComponent extends VBox implements Initializable {
         colorStars();
         commentLabel.setText(review.getComment());
         dateLabel.setText(review.getDateTime());
+        userLabel.setText(review.getAuthor());
     }
 
     public void colorStars() {
