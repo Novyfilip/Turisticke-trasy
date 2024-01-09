@@ -150,16 +150,44 @@ public class RouteComponent extends VBox implements Initializable {
     }
 
     public void writeReviews(Review review) {
-        String writeReviewsQuerry = "INSERT INTO Reviews(value, comment, username) VALUES (?,?,?)";
+        int latestID = 0;
+        String getLatestIDQuerry = "SELECT MAX(id) FROM Review";
         try (Connection connection = db.connect();
-             PreparedStatement pstmt = connection.prepareStatement(writeReviewsQuerry)) {
+             PreparedStatement pstmt = connection.prepareStatement(getLatestIDQuerry)) {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                latestID = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        latestID++;
+
+        String writeReviewsQuery = "INSERT INTO Review(id, value, comment, username) VALUES (?, ?, ?,?)";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(writeReviewsQuery)) {
+            pstmt.setInt(1, latestID);
             pstmt.setInt(2, review.getReviewValue());
-            pstmt.setString(4, review.getComment());
-            pstmt.setString(1, review.getAuthor());
+            pstmt.setString(3, review.getComment());
+            pstmt.setString(4, review.getAuthor());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        String writeReviewsRouteQuery = "INSERT INTO AS_RouteReview(route_id, review_id) VALUES (?, ?)";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(writeReviewsRouteQuery)) {
+            pstmt.setInt(1, route.getId());
+            pstmt.setInt(2, latestID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Route getRoute() {
+        return route;
     }
 
     @Override

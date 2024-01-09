@@ -17,6 +17,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class RouteDetailsController implements Initializable {
@@ -72,7 +74,10 @@ public class RouteDetailsController implements Initializable {
             }
             similarRoutesList.setContent(elements);
         }
+        refreshReviews(route);
+    }
 
+    public void refreshReviews(Route route) {
         if (route.getReviews().isEmpty()) {
             reviewsList.setContent(new EmptyComponent());
         } else {
@@ -110,8 +115,12 @@ public class RouteDetailsController implements Initializable {
         review.setReviewValue(Integer.valueOf((int) sliderHodnoceni.getValue()));
         review.setComment(komentareText.getText());
         review.setAuthor("autor1");
+        //review.setDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).trim());
         routeComponent.writeReviews(review);
+        routeComponent.loadReviews();
+        refreshReviews(routeComponent.getRoute());
         komentareText.clear();
+        komentareText.setDisable(false);
         sliderHodnoceni.setValue(1);
 
     }
