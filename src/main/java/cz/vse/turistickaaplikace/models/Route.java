@@ -1,8 +1,13 @@
 package cz.vse.turistickaaplikace.models;
 
+import cz.vse.turistickaaplikace.components.DatabaseComponent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,7 +120,31 @@ public class Route {
         return url;
     }
 
+    public boolean loadPath() {
+        DatabaseComponent db = new DatabaseComponent();
+        String loadPathQuerry = "SELECT * FROM Path WHERE routeID = ?";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(loadPathQuerry)) {
+            pstmt.setInt(1, this.getId());
+            ResultSet pathResult = pstmt.executeQuery();
+            List<List<Double>> path = new ArrayList<>();
+            while (pathResult.next()) {
+                double x = pathResult.getDouble("x");
+                double y = pathResult.getDouble("y");
+                List<Double> point = new ArrayList<>();
+                point.add(x);
+                point.add(y);
+                path.add(point);
+                this.setPath(path);
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<List<Double>> getPath() {
+        loadPath();
         return path;
     }
 

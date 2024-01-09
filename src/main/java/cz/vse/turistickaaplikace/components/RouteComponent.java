@@ -84,7 +84,7 @@ public class RouteComponent extends VBox implements Initializable {
     @FXML
     public void openRouteDetails(MouseEvent event) {
         loadReviews();
-        //drawRoute();
+        drawRoute();
         appController.routeDetailsController.setRouteComponent(this);
         appController.routeDetailsController.fillRoute(route);
         appController.openRouteDetailsPanel();
