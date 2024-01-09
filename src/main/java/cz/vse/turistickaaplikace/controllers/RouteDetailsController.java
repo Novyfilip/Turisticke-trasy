@@ -41,10 +41,16 @@ public class RouteDetailsController implements Initializable {
 
     private AppController appController;
 
+    private RouteComponent routeComponent;
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
+    public void setRouteComponent(RouteComponent routeComponent) {
+        this.routeComponent = routeComponent;
     }
 
     public void fillRoute(Route route) {
@@ -100,11 +106,11 @@ public class RouteDetailsController implements Initializable {
          */
         komentareText.setDisable(true);
         Review review = new Review();
-        /*tady to udelat tak, aby to naslo nejvyssi hodnotu a pridalo +1)*/
-        review.setId(3);
         /*review.setDateTime();*/
         review.setReviewValue(Integer.valueOf((int) sliderHodnoceni.getValue()));
         review.setComment(komentareText.getText());
+        review.setAuthor("autor1");
+        routeComponent.writeReviews(review);
         komentareText.clear();
         sliderHodnoceni.setValue(1);
 

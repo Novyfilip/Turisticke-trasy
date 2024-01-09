@@ -85,6 +85,7 @@ public class RouteComponent extends VBox implements Initializable {
     public void openRouteDetails(MouseEvent event) {
         loadReviews();
         //drawRoute();
+        appController.routeDetailsController.setRouteComponent(this);
         appController.routeDetailsController.fillRoute(route);
         appController.openRouteDetailsPanel();
     }
@@ -145,6 +146,19 @@ public class RouteComponent extends VBox implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public void writeReviews(Review review) {
+        String writeReviewsQuerry = "INSERT INTO Reviews(value, comment, username) VALUES (?,?,?)";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(writeReviewsQuerry)) {
+            pstmt.setInt(2, review.getReviewValue());
+            pstmt.setString(4, review.getComment());
+            pstmt.setString(1, review.getAuthor());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
