@@ -134,12 +134,10 @@ public class AppController implements Initializable {
 
     public void handleLogout(ActionEvent actionEvent) {
         isLoggedIn = false;
+        setLoggedInUser(null);
         resetView();
         loggedInUserLabel.setText("Odhlášeno");
     }
-
-
-
 
     private Stage getStage() {
         return (Stage) Map.getScene().getWindow();
@@ -164,7 +162,6 @@ public class AppController implements Initializable {
     private Button registerButton;
 
     public void setLoggedInUser(User user) {
-
         if (user != null) {
             loggedInUserLabel.setText(user.getUsername());
             loggedUser = user;
