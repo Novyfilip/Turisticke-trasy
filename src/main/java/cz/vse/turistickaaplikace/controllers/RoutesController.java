@@ -56,10 +56,12 @@ public class RoutesController implements Initializable, IObserver {
                  Route route = new Route();
                  route.setId(routesSet.getInt(1));
                  route.setTitle(routesSet.getString(2));
-                 route.setDistance(routesSet.getInt(3));
+                 route.setDescription(routesSet.getString(3));
                  route.setTimeToComplete(routesSet.getInt(4));
-                 route.setComplexity(routesSet.getInt(5));
-                 route.setDescription(routesSet.getString(6));
+                 route.setDistance(routesSet.getInt(5));
+                 route.setComplexity(routesSet.getInt(6));
+                 route.setRegion(routesSet.getString(7));
+                 route.setMountains(routesSet.getString(8));
                  routeList.add(route);
              }
         } catch (SQLException e) {
