@@ -2,6 +2,8 @@ package cz.vse.turistickaaplikace.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import cz.vse.turistickaaplikace.components.RouteComponent;
+import cz.vse.turistickaaplikace.components.UsersComponent;
 import cz.vse.turistickaaplikace.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,9 +65,14 @@ public class AppController implements Initializable {
     private HashMap<String, User> userMap = new HashMap<>();
     private final String userFilePath = "src/main/resources/cz/vse/turistickaaplikace/users.json";
 
+    private UsersComponent usersComponent = new UsersComponent();
+
+    private User loggedUser;
+
     public HashMap<String, User> getUserMap() {
         return userMap;
     }
+
 
     private void loadUsers() {
         ObjectMapper mapper = new ObjectMapper();
@@ -135,7 +142,9 @@ public class AppController implements Initializable {
         loadView("/cz/vse/turistickaaplikace/views/registration.fxml", routes);
     }
 
-
+    public UsersComponent getUsersComponent() {
+        return usersComponent;
+    }
 
     private void loadView(String fxmlPath, VBox container) {
         try {
@@ -203,7 +212,9 @@ public class AppController implements Initializable {
         }
     }
 
-
+    public void setLoggedUser(User loggedUser) {
+        this.loggedUser = loggedUser;
+    }
 
     @FXML
     private void handleHomeAction(ActionEvent event) {
