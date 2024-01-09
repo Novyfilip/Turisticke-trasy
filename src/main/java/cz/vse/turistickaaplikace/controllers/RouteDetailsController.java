@@ -6,10 +6,7 @@ import cz.vse.turistickaaplikace.components.RouteComponent;
 import cz.vse.turistickaaplikace.models.Review;
 import cz.vse.turistickaaplikace.models.Route;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +37,7 @@ public class RouteDetailsController implements Initializable {
     public Text descriptionLabel;
     public TextField komentareText;
     public Slider sliderHodnoceni;
+    public Button buttonOdesli;
 
     private AppController appController;
 
@@ -75,6 +73,7 @@ public class RouteDetailsController implements Initializable {
             similarRoutesList.setContent(elements);
         }
         refreshReviews(route);
+        refreshCommentField();
     }
 
     public void refreshReviews(Route route) {
@@ -91,6 +90,17 @@ public class RouteDetailsController implements Initializable {
         }
     }
 
+    public void refreshCommentField() {
+        if (appController.getLoggedUser() != null) {
+            komentareText.setDisable(false);
+            buttonOdesli.setDisable(false);
+        }
+        else {
+            komentareText.setDisable(true);
+            buttonOdesli.setDisable(true);
+        }
+    }
+
     public void setAppController(AppController controller) {
         appController = controller;
     }
@@ -103,18 +113,13 @@ public class RouteDetailsController implements Initializable {
     }
 
     public void odesliClick(MouseEvent mouseEvent) {
-        /*TODO logika po stisknuti tlacitka odesli
-        nacteni textu komentare z TextField komentare text - v jsonu comment
-        nacteni hodnoty slideru sliderHodnoceni - v jsonu reviewValue
-        vytvoreni instance tridy Review
-        a ulozeni do jsonu (jak na to?)
-         */
+        //TODO vyresit DateTime
         komentareText.setDisable(true);
         Review review = new Review();
         /*review.setDateTime();*/
         review.setReviewValue(Integer.valueOf((int) sliderHodnoceni.getValue()));
         review.setComment(komentareText.getText());
-        review.setAuthor("autor1");
+        review.setAuthor(appController.getLoggedUser().getUsername());
         //review.setDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).trim());
         routeComponent.writeReviews(review);
         routeComponent.loadReviews();
@@ -122,6 +127,5 @@ public class RouteDetailsController implements Initializable {
         komentareText.clear();
         komentareText.setDisable(false);
         sliderHodnoceni.setValue(1);
-
     }
 }
