@@ -172,6 +172,10 @@ public class AppController implements Initializable {
         }
     }
 
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
     @FXML
     private void handleHomeAction(ActionEvent event) {
         resetView();
