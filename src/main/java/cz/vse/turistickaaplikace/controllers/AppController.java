@@ -74,46 +74,10 @@ public class AppController implements Initializable {
     }
 
 
-    private void loadUsers() {
-        ObjectMapper mapper = new ObjectMapper();
-        File file = new File(userFilePath);
-        if (file.exists()) {
-            try {
-                TypeReference<HashMap<String, User>> typeRef = new TypeReference<HashMap<String, User>>() {};
-                userMap = mapper.readValue(file, typeRef);
-                System.out.println("Načtení uživatelé: " + userMap); // Debugging
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Handle exceptions
-            }
-        }
-    }
-
-
-    void saveUsers() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT); // Enable pretty printing
-
-        try {
-            mapper.writeValue(new File(userFilePath), userMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle exceptions
-        }
-    }
-
-
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Načtení uživatelů
-        loadUsers();
         // Load map
         resetView();
-
     }
 
 
@@ -161,11 +125,8 @@ public class AppController implements Initializable {
         } else if (controller instanceof RegistrationController) {
                 ((RegistrationController) controller).setAppController(this);
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 
@@ -202,18 +163,16 @@ public class AppController implements Initializable {
     @FXML
     private Button registerButton;
 
-    public void setLoggedInUser(String username) {
-        if (username != null && !username.isEmpty()) {
-            loggedInUserLabel.setText(username);
+    public void setLoggedInUser(User user) {
+
+        if (user != null) {
+            loggedInUserLabel.setText(user.getUsername());
+            loggedUser = user;
             registerButton.setVisible(false); // Hide Register button
         } else {
             loggedInUserLabel.setText("Nepřihlášeno");
             registerButton.setVisible(true); // Show Register button
         }
-    }
-
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
     }
 
     @FXML

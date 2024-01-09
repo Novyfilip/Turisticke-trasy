@@ -16,7 +16,7 @@ public class UsersComponent {
         return loggedInUser;
     }
 
-    public Boolean loginUser(String username, String password) {
+    public User loginUser(String username, String password) {
         String loginQuerry = "SELECT * FROM User WHERE username LIKE " + "'" + username + "'";
         try (Connection connection = db.connect();
              PreparedStatement pstmt = connection.prepareStatement(loginQuerry)) {
@@ -28,12 +28,12 @@ public class UsersComponent {
                     String email = user.getString(3);
                     User loggedUser = new User(username, password, email, name, surname);
                     this.loggedInUser = loggedUser;
-                    return true;
+                    return loggedUser;
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
+        return null;
     }
 }

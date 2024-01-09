@@ -49,11 +49,10 @@ public class LoginController implements Initializable, IObservable {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        Boolean result = appController.getUsersComponent().loginUser(username,password);
-        if (result) {
+        User loggedUser = appController.getUsersComponent().loginUser(username,password);
+        if (loggedUser != null) {
             // Successful login
-            appController.setLoggedInUser(username);
-            appController.setLoggedUser(appController.getUsersComponent().getLoggedInUser());
+            appController.setLoggedInUser(loggedUser);
             showSuccessAndRestoreOriginalView("Úspěšné přihlášení", "Vítejte, " + username + "!");
         } else {
             // Failed login

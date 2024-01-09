@@ -87,9 +87,9 @@ public class RegistrationController implements Initializable, IObservable {
             String hashedJmeno = hashWithSHA(jmeno);
             String hashedPrijmeni = hashWithSHA(prijmeni);
 
-            User newUser = new User(username, hashedPassword, hashedEmail, hashedJmeno, hashedPrijmeni, false, null);
-            appController.getUserMap().put(username, newUser); // Přidá se do dictionary
-            appController.saveUsers(); // Poté se uloží do souboru
+            //User newUser = new User(username, hashedPassword, hashedEmail, hashedJmeno, hashedPrijmeni, false, null);
+            //appController.getUserMap().put(username, newUser); // Přidá se do dictionary
+            //appController.saveUsers(); // Poté se uloží do souboru
             return true;
         }
         return false;
