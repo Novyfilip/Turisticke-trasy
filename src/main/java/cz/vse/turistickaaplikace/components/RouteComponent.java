@@ -2,6 +2,7 @@ package cz.vse.turistickaaplikace.components;
 
 import cz.vse.turistickaaplikace.controllers.AppController;
 import cz.vse.turistickaaplikace.controllers.RouteDetailsController;
+import cz.vse.turistickaaplikace.models.Review;
 import cz.vse.turistickaaplikace.models.Route;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +15,11 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 public class RouteComponent extends VBox implements Initializable {
 
@@ -40,6 +44,8 @@ public class RouteComponent extends VBox implements Initializable {
 
     @FXML
     public Text descriptionLabel;
+
+    private DatabaseComponent db = new DatabaseComponent();
 
     public RouteComponent() {
     }
@@ -77,9 +83,10 @@ public class RouteComponent extends VBox implements Initializable {
 
     @FXML
     public void openRouteDetails(MouseEvent event) {
+        loadReviews();
+        //drawRoute();
         appController.routeDetailsController.fillRoute(route);
         appController.openRouteDetailsPanel();
-        drawRoute();
     }
 
     public void drawRoute() {
@@ -102,6 +109,43 @@ public class RouteComponent extends VBox implements Initializable {
         result.append("]");
 
         return result.toString();
+    }
+
+    public void loadReviews() {
+
+        int routeID = this.route.getId();
+        List<Integer> reviewsIDs = new ArrayList<>();
+        String loadReviewIDsQuerry = "SELECT review_id FROM AS_RouteReview WHERE route_id = ?";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(loadReviewIDsQuerry)) {
+            pstmt.setInt(1, routeID);
+            ResultSet reviewsIDsSet = pstmt.executeQuery();
+            while (reviewsIDsSet.next()) {
+                reviewsIDs.add(reviewsIDsSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int reviewID : reviewsIDs) {
+            String loadReviewsQuerry = "SELECT * FROM Review WHERE id = ?";
+            try (Connection connection = db.connect();
+                 PreparedStatement pstmt = connection.prepareStatement(loadReviewsQuerry)) {
+                pstmt.setInt(1,reviewID);
+                ResultSet reviewsSet = pstmt.executeQuery();
+                while (reviewsSet.next()) {
+                    Review review = new Review();
+                    review.setId(reviewsSet.getInt(1));
+                    review.setReviewValue(reviewsSet.getInt(2));
+                    //review.setDateTime(reviewsSet.getString(3));
+                    review.setComment(reviewsSet.getString(4));
+                    review.setAuthor(reviewsSet.getString(5));
+                    this.route.addReview(review);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
