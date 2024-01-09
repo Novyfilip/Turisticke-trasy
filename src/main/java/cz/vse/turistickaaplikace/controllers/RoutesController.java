@@ -2,6 +2,7 @@ package cz.vse.turistickaaplikace.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.vse.turistickaaplikace.components.DatabaseComponent;
 import cz.vse.turistickaaplikace.components.EmptyComponent;
 import cz.vse.turistickaaplikace.components.RouteComponent;
 import cz.vse.turistickaaplikace.enumerators.AppChange;
@@ -18,6 +19,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,23 +40,29 @@ public class RoutesController implements Initializable, IObserver {
 
     private List<Route> filteredRouteList = new ArrayList<>();
 
+    private DatabaseComponent db = new DatabaseComponent();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadRoutes();
     }
 
     private void loadRoutes() {
-        try {
-            InputStream inputStream = getClass().getResourceAsStream("/cz/vse/turistickaaplikace/routes.json");
-
-            ObjectMapper routeMapper = new ObjectMapper();
-
-            if (inputStream != null) {
-                routeList = routeMapper.readValue(inputStream, new TypeReference<List<Route>>() {});
-            } else {
-                throw new FileNotFoundException("Resource not found: routes.json");
-            }
-        } catch (IOException e) {
+        String loadRoutesQuerry = "SELECT * FROM Route";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(loadRoutesQuerry)) {
+             ResultSet routesSet = pstmt.executeQuery();
+             while (routesSet.next()) {
+                 Route route = new Route();
+                 route.setId(routesSet.getInt(1));
+                 route.setTitle(routesSet.getString(2));
+                 route.setDistance(routesSet.getInt(3));
+                 route.setTimeToComplete(routesSet.getInt(4));
+                 route.setComplexity(routesSet.getInt(5));
+                 route.setDescription(routesSet.getString(6));
+                 routeList.add(route);
+             }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
