@@ -36,4 +36,31 @@ public class UsersComponent {
         }
         return null;
     }
+
+    public Boolean registerUser(String name, String surname, String email, String username, String password) {
+        String checkUsername = "SELECT * FROM User WHERE username LIKE " + "'" + username + "'";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(checkUsername)) {
+            ResultSet user = pstmt.executeQuery();
+            while (user.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String insertUserQuery = "INSERT INTO User (jmeno, prijmeni, email, username, password) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = db.connect();
+             PreparedStatement pstmt = connection.prepareStatement(insertUserQuery)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, surname);
+            pstmt.setString(3, email);
+            pstmt.setString(4, username);
+            pstmt.setString(5, password);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
