@@ -2,6 +2,7 @@ module cz.vse.turistickaaplikace {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires java.sql;
     requires org.controlsfx.controls;
     requires com.fasterxml.jackson.databind;
 
