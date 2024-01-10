@@ -98,9 +98,9 @@ public class RouteComponent extends VBox implements Initializable {
         StringBuilder result = new StringBuilder("[");
         for (List<Double> coordinates : coordinatesList) {
             result.append("[")
-                    .append(coordinates.get(0))
-                    .append(", ")
                     .append(coordinates.get(1))
+                    .append(", ")
+                    .append(coordinates.get(0))
                     .append("], ");
         }
         // Remove the trailing comma and space
