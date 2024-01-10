@@ -42,6 +42,7 @@ public class RegistrationController implements Initializable, IObservable {
     @FXML
     private PasswordField hesloField;
 
+    //metoda ověřuje správnost zadaných údajů; pokud nejsou správné, uživatel dostane chybovou hlášku
     @FXML
     private void handleRegistrationAction(ActionEvent event) {
         String jmeno = jmenoField.getText();
@@ -61,6 +62,7 @@ public class RegistrationController implements Initializable, IObservable {
         }
     }
 
+    //regex pro validní formát emailu
     private boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);

@@ -63,6 +63,7 @@ public class AppController implements Initializable {
         this.isLoggedIn = loggedIn;
     }
     private HashMap<String, User> userMap = new HashMap<>();
+    //původní soubor pro ukládání uživatelů, nyní v databázi
     private final String userFilePath = "src/main/resources/cz/vse/turistickaaplikace/users.json";
 
     private UsersComponent usersComponent = new UsersComponent();
@@ -97,12 +98,12 @@ public class AppController implements Initializable {
         routes.setVisible(true);
     }
     public void handleLogin(ActionEvent actionEvent) {
-        storeOriginalContentView(); // Store the current view
+        storeOriginalContentView(); // Uloží současně zobrazenou mapu
         loadView("/cz/vse/turistickaaplikace/views/login.fxml", routes);
     }
 
     public void handleRegister(ActionEvent actionEvent) {
-        storeOriginalContentView(); // Store the current view
+        storeOriginalContentView();
         loadView("/cz/vse/turistickaaplikace/views/registration.fxml", routes);
     }
 
@@ -165,10 +166,10 @@ public class AppController implements Initializable {
         if (user != null) {
             loggedInUserLabel.setText(user.getUsername());
             loggedUser = user;
-            registerButton.setVisible(false); // Hide Register button
+            registerButton.setVisible(false); // schová Register button
         } else {
             loggedInUserLabel.setText("Nepřihlášeno");
-            registerButton.setVisible(true); // Show Register button
+            registerButton.setVisible(true); // ukáže Register button
         }
     }
 
@@ -181,15 +182,14 @@ public class AppController implements Initializable {
         resetView();
     }
     public void resetView() {
-        // Load map and set controllers
+        // Načte mapu znovu, settery pro controllery
         webEngine = Map.getEngine();
         webEngine.load(getClass().getResource("/cz/vse/turistickaaplikace/leaflet-maps.html").toExternalForm());
 
         routesController.setAppController(this);
         filtersController.setAppController(this);
         routeDetailsController.setAppController(this);
-
-        // Additional steps to reset the view, if any
+        
     }
 
 
