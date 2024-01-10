@@ -68,13 +68,19 @@ public class RouteComponent extends VBox implements Initializable {
         }
 
         loadReviews();
+        loadSimilarRoutes();
 
         titleLabel.setText(route.getTitle());
         reviewLabel.setText(String.valueOf(route.getReviewMeanValue()));
         distanceLabel.setText(route.getDistance());
         complexityLabel.setText(route.getComplexity());
         complexityIcon.setFill(route.getComplexityColor());
-        descriptionLabel.setText(route.getExcerpt());
+
+        if (viewName.equals("routeNarrow")) {
+            descriptionLabel.setText(route.getExcerpt(90));
+        } else {
+            descriptionLabel.setText(route.getExcerpt(180));
+        }
 
         this.setOnMouseClicked(this::openRouteDetails);
     }
@@ -148,6 +154,32 @@ public class RouteComponent extends VBox implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void loadSimilarRoutes() {
+        List<Route> routeList = new ArrayList<>();
+        int routeID = this.route.getId();
+        String stmt = "SELECT * FROM Route WHERE id != ? ORDER BY RANDOM() LIMIT 5";
+        try (Connection connection = db.connect();
+            PreparedStatement pstmt = connection.prepareStatement(stmt)) {
+            pstmt.setInt(1, routeID);
+            ResultSet routesSet = pstmt.executeQuery();
+            while (routesSet.next()) {
+                Route route = new Route();
+                route.setId(routesSet.getInt(1));
+                route.setTitle(routesSet.getString(2));
+                route.setDescription(routesSet.getString(3));
+                route.setTimeToComplete(routesSet.getInt(4));
+                route.setDistance(routesSet.getInt(5));
+                route.setComplexity(routesSet.getInt(6));
+                route.setRegion(routesSet.getString(7));
+                route.setMountains(routesSet.getString(8));
+                routeList.add(route);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        this.route.setSimilarRoutes(routeList);
     }
 
     public void writeReviews(Review review) {
