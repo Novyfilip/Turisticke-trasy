@@ -52,8 +52,9 @@ public class RegistrationController implements Initializable, IObservable {
         if (isEmailValid(email) && isPasswordValid(heslo)) {
             if (appController.getUsersComponent().registerUser(jmeno, prijmeni, email, username, heslo)) {
                 showAlertDialog(Alert.AlertType.INFORMATION, "Registrace Dokončena", "Váš účet byl úspěšně vytvořen. Nyní se můžete přihlásit.");
+                appController.handleLogin(null);
             } else {
-                showAlertDialog(Alert.AlertType.ERROR, "Registrace selhala", "Vaše údaje nesplňují požadavky. Vyplňte povinné údaje s heslem dlouhým alespoň 8 znaků.");
+                showAlertDialog(Alert.AlertType.ERROR, "Registrace selhala", "Uživatel s touto e-mailovou adresou již existuje..");
             }
         }
         else {
