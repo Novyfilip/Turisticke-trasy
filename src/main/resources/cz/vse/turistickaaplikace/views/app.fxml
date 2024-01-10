@@ -40,10 +40,18 @@
         <ToolBar>
             <Region HBox.hgrow="ALWAYS"/>
             <HBox alignment="CENTER_RIGHT">
-                <Button text="Přihlásit" fx:id="loginButton" onAction="#handleLogin"/>
+                <Button text="Přihlásit" fx:id="loginButton" onAction="#handleLogin">
+                    <HBox.margin>
+                        <Insets right="5.0" />
+                    </HBox.margin>
+                </Button>
                 <Button text="Zaregistrovat" fx:id="registerButton" onAction="#handleRegister"/>
                 <Label fx:id="loggedInUserLabel" visible="false" managed="false" text="Nepřihlášeno" />
-                <Button text="Odhlásit" visible="false" managed="false" fx:id="logoutButton" onAction="#handleLogout"/>
+                <Button text="Odhlásit" visible="false" managed="false" fx:id="logoutButton" onAction="#handleLogout">
+                    <HBox.margin>
+                        <Insets left="5.0" />
+                    </HBox.margin>
+                </Button>
                 <Region HBox.hgrow="ALWAYS"/>
             </HBox>
         </ToolBar>
