@@ -67,6 +67,8 @@ public class RouteComponent extends VBox implements Initializable {
             throw new RuntimeException(exception);
         }
 
+        loadReviews();
+
         titleLabel.setText(route.getTitle());
         reviewLabel.setText(String.valueOf(route.getReviewMeanValue()));
         distanceLabel.setText(route.getDistance());
@@ -83,7 +85,6 @@ public class RouteComponent extends VBox implements Initializable {
 
     @FXML
     public void openRouteDetails(MouseEvent event) {
-        loadReviews();
         drawRoute();
         appController.routeDetailsController.setRouteComponent(this);
         appController.routeDetailsController.fillRoute(route);
