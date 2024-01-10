@@ -4,15 +4,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
+<?import javafx.scene.text.Font?>
 <GridPane fx:controller="cz.vse.turistickaaplikace.controllers.LoginController"
-          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10" alignment="CENTER">
+          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10" alignment="BASELINE_LEFT">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="20" bottom="20"/>
     </padding>
 
-    <!-- Title -->
-    <Text text="Přihlášení" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/>
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+        <children>
+            <!-- Title -->
+            <Text text="Přihlášení">
+                <font>
+                    <Font name="System Bold" size="26.0" />
+                </font>
+            </Text>
+            <Region disable="true" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets />
+                </HBox.margin>
+            </Region>
+            <!-- Back or Close Button -->
+            <Button focusTraversable="false" graphicTextGap="5.0" mnemonicParsing="false" onAction="#handleCloseAction" text="Zpět">
+                <graphic>
+                    <SVGPath content="M6.67188 10.9375L2.73438 7L6.67188 3.0625M3.28125 7H11.2656" fill="TRANSPARENT" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+                </graphic></Button>
+        </children>
+        <VBox.margin>
+            <Insets bottom="10.0" />
+        </VBox.margin>
+    </HBox>
 
     <!-- Username -->
     <Label text="Uživatelské jméno:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -24,7 +51,4 @@
 
     <!-- Login Button -->
     <Button text="Login" onAction="#handleLoginAction" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-    <!-- Back or Close Button -->
-    <Button text="Zpět" onAction="#handleCloseAction" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 </GridPane>

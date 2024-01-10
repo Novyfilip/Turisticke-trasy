@@ -38,14 +38,13 @@
       fx:controller="cz.vse.turistickaaplikace.controllers.AppController">
     <children>
         <ToolBar>
-            <Button text="Domů" fx:id="homeButton" onAction="#handleHomeAction" />
-            <Button text="Přihlásit" fx:id="loginButton" onAction="#handleLogin"/>
-            <Button text="Odhlásit" fx:id="logoutButton" onAction="#handleLogout"/>
             <Region HBox.hgrow="ALWAYS"/>
             <HBox alignment="CENTER_RIGHT">
+                <Button text="Přihlásit" fx:id="loginButton" onAction="#handleLogin"/>
                 <Button text="Zaregistrovat" fx:id="registerButton" onAction="#handleRegister"/>
+                <Label fx:id="loggedInUserLabel" visible="false" managed="false" text="Nepřihlášeno" />
+                <Button text="Odhlásit" visible="false" managed="false" fx:id="logoutButton" onAction="#handleLogout"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="loggedInUserLabel" text="Nepřihlášeno" />
             </HBox>
         </ToolBar>
         <!-- Rest of your UI elements... -->

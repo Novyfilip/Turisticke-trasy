@@ -35,7 +35,6 @@ import java.io.File;
 
 
 public class AppController implements Initializable {
-
     @FXML
     RoutesController routesController;
 
@@ -97,12 +96,10 @@ public class AppController implements Initializable {
         routes.setVisible(true);
     }
     public void handleLogin(ActionEvent actionEvent) {
-        storeOriginalContentView(); // Store the current view
         loadView("/cz/vse/turistickaaplikace/views/login.fxml", routes);
     }
 
     public void handleRegister(ActionEvent actionEvent) {
-        storeOriginalContentView(); // Store the current view
         loadView("/cz/vse/turistickaaplikace/views/registration.fxml", routes);
     }
 
@@ -159,16 +156,26 @@ public class AppController implements Initializable {
     @FXML
     private MenuItem homeMenuItem;
     @FXML
-    private Button registerButton;
+    private Button registerButton, loginButton, logoutButton;
 
     public void setLoggedInUser(User user) {
         if (user != null) {
             loggedInUserLabel.setText(user.getUsername());
+            loggedInUserLabel.setManaged(true);
+            loggedInUserLabel.setVisible(true);
             loggedUser = user;
-            registerButton.setVisible(false); // Hide Register button
+            registerButton.setVisible(false);
+            loginButton.setVisible(false);
+            logoutButton.setManaged(true);
+            logoutButton.setVisible(true);
         } else {
             loggedInUserLabel.setText("Nepřihlášeno");
-            registerButton.setVisible(true); // Show Register button
+            loggedInUserLabel.setManaged(false);
+            loggedInUserLabel.setVisible(false);
+            registerButton.setVisible(true);
+            loginButton.setVisible(true);
+            logoutButton.setManaged(false);
+            logoutButton.setVisible(false);
         }
     }
 
@@ -189,6 +196,7 @@ public class AppController implements Initializable {
         filtersController.setAppController(this);
         routeDetailsController.setAppController(this);
 
+        storeOriginalContentView(); // Store the current view
         // Additional steps to reset the view, if any
     }
 
