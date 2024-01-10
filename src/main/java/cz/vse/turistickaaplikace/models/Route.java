@@ -51,8 +51,7 @@ public class Route {
         return description;
     }
 
-    public String getExcerpt() {
-        int maxExcerptLength = 180;
+    public String getExcerpt(int maxExcerptLength) {
         if (description.length() <= maxExcerptLength) {
             return description;
         } else {
