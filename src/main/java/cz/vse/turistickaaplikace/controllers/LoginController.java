@@ -24,9 +24,9 @@ import javafx.util.Duration;
 
 public class LoginController implements Initializable, IObservable {
     private AppController appController;
-    public void setAppController(AppController appController) {
-        this.appController = appController;
 
+    public void setAppController(AppController controller) {
+        appController = controller;
     }
 
     @FXML
@@ -35,7 +35,7 @@ public class LoginController implements Initializable, IObservable {
     @FXML
     private PasswordField passwordField;
 
-    // Assuming you have a way to access userList from AppController
+
     private Map<String, User> userMap;
 
     public void setUserMap(Map<String, User> userMap) {
@@ -44,6 +44,7 @@ public class LoginController implements Initializable, IObservable {
     //pro metodu authenticate
 
 
+    //pro tlačítko přihlásit
     @FXML
     private void handleLoginAction(ActionEvent event) {
         String username = usernameField.getText();
@@ -61,7 +62,7 @@ public class LoginController implements Initializable, IObservable {
     }
     @FXML
     private void handleCloseAction(ActionEvent event) {
-        appController.restoreOriginalContentView();
+        appController.openLastOpenedPanel();
     }
 
 
@@ -72,11 +73,11 @@ public class LoginController implements Initializable, IObservable {
         alert.setContentText(content);
         alert.show();
 
-        // Wait for 2 seconds and then restore the original view
+        // Počká 2s
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(e -> {
             alert.close();
-            appController.restoreOriginalContentView();
+            appController.openLastOpenedPanel();
         });
         pause.play();
     }
@@ -105,6 +106,7 @@ public class LoginController implements Initializable, IObservable {
             return null; // možná předělám
         }
     }
+    //pomocná metoda pro šifrovací metodu
     private String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -114,6 +116,7 @@ public class LoginController implements Initializable, IObservable {
     }
 
 
+    //zobrazí chybovou hlášku
     private void showAlertDialog(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -122,6 +125,7 @@ public class LoginController implements Initializable, IObservable {
         alert.showAndWait();
     }
 
+    //registruje pozorovatele
     @Override
     public void registruj(AppChange changeType, IObserver observer) {
 
@@ -133,4 +137,3 @@ public class LoginController implements Initializable, IObservable {
 
     }
 }
-

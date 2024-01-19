@@ -1,37 +1,21 @@
 package cz.vse.turistickaaplikace.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import cz.vse.turistickaaplikace.components.RouteComponent;
 import cz.vse.turistickaaplikace.components.UsersComponent;
 import cz.vse.turistickaaplikace.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import java.io.File;
 
 
 public class AppController implements Initializable {
@@ -40,6 +24,12 @@ public class AppController implements Initializable {
 
     @FXML
     FiltersController filtersController;
+
+    @FXML
+    LoginController loginController;
+
+    @FXML
+    RegistrationController registrationController;
 
     @FXML
     public RouteDetailsController routeDetailsController;
@@ -54,6 +44,11 @@ public class AppController implements Initializable {
     public VBox routeDetails;
 
     @FXML
+    public GridPane login, registration;
+
+    private Pane lastOpenedPanel;
+
+    @FXML
     private WebView Map;
 
     public WebEngine webEngine;
@@ -62,6 +57,7 @@ public class AppController implements Initializable {
         this.isLoggedIn = loggedIn;
     }
     private HashMap<String, User> userMap = new HashMap<>();
+    //původní soubor pro ukládání uživatelů, nyní v databázi
     private final String userFilePath = "src/main/resources/cz/vse/turistickaaplikace/users.json";
 
     private UsersComponent usersComponent = new UsersComponent();
@@ -79,70 +75,65 @@ public class AppController implements Initializable {
         resetView();
     }
 
+    public void openLastOpenedPanel() {
+        closeAllPanels();
+
+        if (lastOpenedPanel != null) {
+            lastOpenedPanel.setVisible(true);
+        } else {
+            openRoutesPanel();
+        }
+    }
 
     public void openFiltersPanel() {
+        closeAllPanels();
         filters.setVisible(true);
-        routes.setVisible(false);
+        lastOpenedPanel = filters;
     }
 
     public void openRouteDetailsPanel() {
+        closeAllPanels();
         routeDetails.setVisible(true);
-        routes.setVisible(false);
+        lastOpenedPanel = routeDetails;
     }
 
-    public void closePanel() {
+    public void openRoutesPanel() {
+        closeAllPanels();
+        routes.setVisible(true);
+        lastOpenedPanel = routes;
+    }
+
+    public void closeAllPanels() {
         filters.setVisible(false);
         routeDetails.setVisible(false);
-        routes.setVisible(true);
+        routes.setVisible(false);
+        login.setVisible(false);
+        registration.setVisible(false);
     }
+
     public void handleLogin(ActionEvent actionEvent) {
-        loadView("/cz/vse/turistickaaplikace/views/login.fxml", routes);
+        closeAllPanels();
+        login.setVisible(true);
     }
 
     public void handleRegister(ActionEvent actionEvent) {
-        loadView("/cz/vse/turistickaaplikace/views/registration.fxml", routes);
+        closeAllPanels();
+        registration.setVisible(true);
+    }
+
+    public void updateAuthenticatedUi() {
+        routeDetailsController.refreshCommentField();
     }
 
     public UsersComponent getUsersComponent() {
         return usersComponent;
     }
 
-    private void loadView(String fxmlPath, VBox container) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent view = loader.load();
-            container.getChildren().clear();
-            container.getChildren().add(view);
-
-            Object controller = loader.getController();
-            if (controller instanceof LoginController) {
-                ((LoginController) controller).setAppController(this);
-                ((LoginController) controller).setUserMap(getUserMap());
-
-        } else if (controller instanceof RegistrationController) {
-                ((RegistrationController) controller).setAppController(this);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
     public void handleLogout(ActionEvent actionEvent) {
         isLoggedIn = false;
         setLoggedInUser(null);
-        resetView();
         loggedInUserLabel.setText("Odhlášeno");
-    }
-
-    private Stage getStage() {
-        return (Stage) Map.getScene().getWindow();
-    }
-    private List<Node> originalContentView;
-
-    public void storeOriginalContentView() {
-        this.originalContentView = new ArrayList<>(routes.getChildren());
+        openLastOpenedPanel();
     }
 
     public void restoreOriginalContentView() {
@@ -153,8 +144,7 @@ public class AppController implements Initializable {
     //Přihlášený uživatel
     @FXML
     private Label loggedInUserLabel;
-    @FXML
-    private MenuItem homeMenuItem;
+
     @FXML
     private Button registerButton, loginButton, logoutButton;
 
@@ -183,28 +173,15 @@ public class AppController implements Initializable {
         return loggedUser;
     }
 
-    @FXML
-    private void handleHomeAction(ActionEvent event) {
-        resetView();
-    }
     public void resetView() {
-        // Load map and set controllers
         webEngine = Map.getEngine();
         webEngine.load(getClass().getResource("/cz/vse/turistickaaplikace/leaflet-maps.html").toExternalForm());
 
         routesController.setAppController(this);
         filtersController.setAppController(this);
         routeDetailsController.setAppController(this);
+        loginController.setAppController(this);
+        registrationController.setAppController(this);
 
-        storeOriginalContentView(); // Store the current view
-        // Additional steps to reset the view, if any
     }
-
-
-
-
-
-
 }
-
-

@@ -106,7 +106,7 @@ public class RouteDetailsController implements Initializable {
     }
 
     public void closeRouteDetailPanel(MouseEvent mouseEvent) {
-        appController.closePanel();
+        appController.openRoutesPanel();
         appController.webEngine.executeScript("clearMap()");
         appController.webEngine.executeScript("recenterMap()");
 

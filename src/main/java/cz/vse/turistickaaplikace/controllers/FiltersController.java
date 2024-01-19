@@ -175,7 +175,7 @@ public class FiltersController implements Initializable, IObservable {
     }
 
     public void closeFiltersPanel(MouseEvent mouseEvent) {
-        appController.closePanel();
+        appController.openRoutesPanel();
     }
 
     @Override
