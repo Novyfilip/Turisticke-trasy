@@ -77,7 +77,7 @@ public class RouteComponent extends VBox implements Initializable {
         complexityIcon.setFill(route.getComplexityColor());
 
         if (viewName.equals("routeNarrow")) {
-            descriptionLabel.setText(route.getExcerpt(90));
+            descriptionLabel.setText(route.getExcerpt(70));
         } else {
             descriptionLabel.setText(route.getExcerpt(180));
         }

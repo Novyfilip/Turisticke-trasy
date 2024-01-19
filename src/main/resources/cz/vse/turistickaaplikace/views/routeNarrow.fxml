@@ -25,17 +25,14 @@
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
-         <VBox.margin>
-            <Insets bottom="5.0" />
-         </VBox.margin>
       </Label>
       <FlowPane hgap="20.0" vgap="10.0">
          <VBox.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="5.0" />
          </VBox.margin>
          <children>
             <Label fx:id="distanceLabel" text="Délka 1.1 km" textFill="#00000099" />
-            <Label fx:id="complexityLabel" text="Střední náročnost" textFill="#00000099" wrapText="true">
+            <Label fx:id="complexityLabel" text="Střední náročnost" textFill="#00000099" wrapText="true" managed="false" visible="false">
                <graphic>
                   <Circle fx:id="complexityIcon" fill="#d4a600" radius="5.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                </graphic>
