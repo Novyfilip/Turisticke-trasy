@@ -111,7 +111,47 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <Slider fx:id="sliderHodnoceni" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="0" showTickLabels="true" snapToTicks="true" value="1.0" />
+            <Slider fx:id="sliderHodnoceni" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="1.0" />
+            <HBox VBox.vgrow="NEVER">
+               <children>
+                  <Label fx:id="reviewLabel1" contentDisplay="RIGHT" text="1" textFill="#00000099">
+                     <graphic>
+                        <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d7c100" />
+                     </graphic>
+                  </Label>
+                  <Region disable="true" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Region>
+                  <Label fx:id="reviewLabel11" contentDisplay="RIGHT" text="2" textFill="#00000099">
+                     <graphic>
+                        <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d7c100" />
+                     </graphic>
+                  </Label>
+                  <Region disable="true" HBox.hgrow="ALWAYS" />
+                  <Label fx:id="reviewLabel12" contentDisplay="RIGHT" text="3" textFill="#00000099">
+                     <graphic>
+                        <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d7c100" />
+                     </graphic>
+                  </Label>
+                  <Region disable="true" HBox.hgrow="ALWAYS" />
+                  <Label fx:id="reviewLabel13" contentDisplay="RIGHT" text="4" textFill="#00000099">
+                     <graphic>
+                        <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d7c100" />
+                     </graphic>
+                  </Label>
+                  <Region disable="true" HBox.hgrow="ALWAYS" />
+                  <Label fx:id="reviewLabel14" contentDisplay="RIGHT" text="5" textFill="#00000099">
+                     <graphic>
+                        <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d7c100" />
+                     </graphic>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="-5.0" />
+               </VBox.margin>
+            </HBox>
             <HBox prefHeight="25.0" prefWidth="400.0">
                <children>
                   <TextField fx:id="komentareText" promptText="Komentář" HBox.hgrow="ALWAYS">
