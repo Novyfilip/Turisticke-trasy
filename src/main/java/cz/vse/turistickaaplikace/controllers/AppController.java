@@ -53,8 +53,8 @@ public class AppController implements Initializable {
 
     public WebEngine webEngine;
     private boolean isLoggedIn = false;
-    public void setLoggedIn(boolean loggedIn) {
-        this.isLoggedIn = loggedIn;
+    public boolean isUserLoggedIn() {
+        return this.isLoggedIn;
     }
     private HashMap<String, User> userMap = new HashMap<>();
     //původní soubor pro ukládání uživatelů, nyní v databázi
@@ -136,11 +136,6 @@ public class AppController implements Initializable {
         openLastOpenedPanel();
     }
 
-    public void restoreOriginalContentView() {
-        if (originalContentView != null) {
-            routes.getChildren().setAll(originalContentView);
-        }
-    }
     //Přihlášený uživatel
     @FXML
     private Label loggedInUserLabel;
@@ -150,6 +145,7 @@ public class AppController implements Initializable {
 
     public void setLoggedInUser(User user) {
         if (user != null) {
+            isLoggedIn = true;
             loggedInUserLabel.setText(user.getUsername());
             loggedInUserLabel.setManaged(true);
             loggedInUserLabel.setVisible(true);
@@ -159,6 +155,7 @@ public class AppController implements Initializable {
             logoutButton.setManaged(true);
             logoutButton.setVisible(true);
         } else {
+            isLoggedIn = false;
             loggedInUserLabel.setText("Nepřihlášeno");
             loggedInUserLabel.setManaged(false);
             loggedInUserLabel.setVisible(false);
@@ -167,6 +164,8 @@ public class AppController implements Initializable {
             logoutButton.setManaged(false);
             logoutButton.setVisible(false);
         }
+
+        updateAuthenticatedUi();
     }
 
     public User getLoggedUser() {

@@ -10,12 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class RouteDetailsController implements Initializable {
@@ -38,6 +37,10 @@ public class RouteDetailsController implements Initializable {
     public TextField komentareText;
     public Slider sliderHodnoceni;
     public Button buttonOdesli;
+
+    public VBox reviewForm;
+
+    public Label reviewFormMessage;
 
     private AppController appController;
 
@@ -91,13 +94,16 @@ public class RouteDetailsController implements Initializable {
     }
 
     public void refreshCommentField() {
-        if (appController.getLoggedUser() != null) {
-            komentareText.setDisable(false);
-            buttonOdesli.setDisable(false);
-        }
-        else {
-            komentareText.setDisable(true);
-            buttonOdesli.setDisable(true);
+        if (appController.isUserLoggedIn()) {
+            reviewForm.setDisable(false);
+            reviewFormMessage.setTextFill(Paint.valueOf("black"));
+            reviewFormMessage.setText("");
+            reviewFormMessage.setManaged(false);
+        } else {
+            reviewForm.setDisable(true);
+            reviewFormMessage.setManaged(true);
+            reviewFormMessage.setTextFill(Paint.valueOf("red"));
+            reviewFormMessage.setText("Abyste mohli přidávat hodnocení, zaregistrujte se nebo se přihlaste.");
         }
     }
 
