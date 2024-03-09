@@ -1,2 +1,4 @@
-package cz.vse.turistickaaplikace.tests;public class RouteDetailsControllerTest {
+package cz.vse.turistickaaplikace.tests;
+
+public class RouteDetailsControllerTest {
 }

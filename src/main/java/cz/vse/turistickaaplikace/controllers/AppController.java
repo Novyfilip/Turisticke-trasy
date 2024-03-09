@@ -189,7 +189,7 @@ public class AppController implements Initializable {
         routesController.setAppController(this);
         filtersController.setAppController(this);
         routeDetailsController.setAppController(this);
-        
+
     }
 
 

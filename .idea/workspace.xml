@@ -1,11 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="149a088b-b604-4ed4-8e08-0f35583ae737" name="Changes" comment="" />
+    <list default="true" id="149a088b-b604-4ed4-8e08-0f35583ae737" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/AppControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/FiltersControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/LoginControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/RegistrationControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/RouteDetailsControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/tests/RoutesControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/controllers/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cz/vse/turistickaaplikace/controllers/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/Start.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/components/EmptyComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/components/ReviewComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/components/RouteComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/AppController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/AppController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/FiltersController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/FiltersController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/FiltersController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/RegistrationController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/RouteDetailsController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/RoutesController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/controllers/RoutesController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/data/horyDB.db" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/data/horyDB.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/enumerators/AppChange.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/interfaces/IObservable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/interfaces/IObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/models/Review.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/models/Route.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cz/vse/turistickaaplikace/models/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -13,16 +59,36 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2aP7oUq4GdsRkCjTVSshSAlWEUt" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "testy",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -31,8 +97,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1704208535100</updated>
+      <workItem from="1704892126875" duration="1235000" />
+      <workItem from="1706360703307" duration="5509000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

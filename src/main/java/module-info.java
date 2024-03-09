@@ -4,6 +4,8 @@ module cz.vse.turistickaaplikace {
     requires javafx.web;
     requires org.controlsfx.controls;
     requires com.fasterxml.jackson.databind;
+    requires java.sql;
+    requires org.junit.jupiter.api;
 
     opens cz.vse.turistickaaplikace to javafx.fxml;
     exports cz.vse.turistickaaplikace;
