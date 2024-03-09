@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="map" style="width: 500px; height: 500px;"></div>
+<script>
+    const customRouteCoordonates = [
+        { lat: 37.772, lng: -122.214 },
+        { lat: 21.291, lng: -157.821 },
+        { lat: -18.142, lng: 178.431 },
+        { lat: -27.467, lng: 153.027 },
+    ];
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 3,
+            center: { lat: 0, lng: -180 },
+            mapTypeId: "terrain",
+        });
+        //Set up your polyline
+        const routePath= new google.maps.Polyline({
+            path: customRouteCoordonates ,
+            geodesic: true,
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+        });
+        routePath.setMap(map);
+    }
+</script>
+</body>
+</html>

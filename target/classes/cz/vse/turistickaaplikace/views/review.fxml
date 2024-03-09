@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<fx:root type="VBox" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets right="10.0" />
+   </padding>
+   <children>
+      <Label fx:id="userLabel" text="User #102031">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </Label>
+      <FlowPane alignment="CENTER_LEFT" hgap="10.0">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <children>
+            <Label fx:id="dateLabel" text="October 28, 2023" textFill="#00000099" />
+            <HBox fx:id="starsContainer" alignment="CENTER_LEFT">
+               <children>
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d4b400" opacity="0.3" />
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d4b400" opacity="0.3" />
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d4b400" opacity="0.3" />
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d4b400" opacity="0.3" />
+                  <SVGPath content="M6.5 0L7.95934 4.49139H12.6819L8.86126 7.26722L10.3206 11.7586L6.5 8.98278L2.6794 11.7586L4.13874 7.26722L0.318133 4.49139H5.04066L6.5 0Z" fill="#d4b400" opacity="0.3" />
+               </children>
+            </HBox>
+         </children>
+      </FlowPane>
+      <Text fx:id="commentLabel" lineSpacing="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A nice nature trail in Dejvice near Prague. The route starts at the parking lot near Jenerálka Castle. The road then continues along the Šárecký stream in the area of Divok..." wrappingWidth="400.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+   </children>
+   <VBox.margin>
+      <Insets bottom="10.0" />
+   </VBox.margin>
+</fx:root>

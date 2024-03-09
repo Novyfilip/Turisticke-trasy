@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html,
+        body,
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    var map = L.map('map');
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    recenterMap();
+
+    function recenterMap() {
+        map.setView([50.10, 14.35], 12);
+    }
+
+    function clearMap() {
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Polyline) {
+                map.removeLayer(layer);
+            }
+        });
+        map.re
+    }
+
+    function drawRoute(points) {
+        var routeCoordinates = points;
+
+        var route = L.polyline(routeCoordinates, { color: 'red', weight: 5 }).addTo(map);
+
+        map.fitBounds(route.getBounds(), { maxZoom: 14 });
+    }
+</script>
+</body>
+</html>

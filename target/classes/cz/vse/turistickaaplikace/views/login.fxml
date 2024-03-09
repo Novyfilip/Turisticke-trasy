@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:controller="cz.vse.turistickaaplikace.controllers.LoginController"
+          xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Title -->
+    <Text text="Přihlášení" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Username -->
+    <Label text="Uživatelské jméno:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <!-- Password -->
+    <Label text="Heslo:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <!-- Login Button -->
+    <Button text="Login" onAction="#handleLoginAction" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <!-- Back or Close Button -->
+    <Button text="Zpět" onAction="#handleCloseAction" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+</GridPane>
